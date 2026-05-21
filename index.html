@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Campanario – Restaurante | Morelia, Mich.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --crema:   #f7f1e6;
+      --cafe:    #2c1a0e;
+      --terrac:  #9b4a2b;
+      --oro:     #c8963c;
+      --piedra:  #e2d5c0;
+      --humo:    #6b5745;
+      --blanco:  #fdfaf5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--blanco);
+      color: var(--cafe);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 5%;
+      background: rgba(44,26,14,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(200,150,60,0.2);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 600;
+      color: var(--oro); letter-spacing: 2px;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--piedra); font-size: 13px; letter-spacing: 1.5px;
+      text-transform: uppercase; text-decoration: none;
+      font-weight: 500; transition: color .25s;
+    }
+    .nav-links a:hover { color: var(--oro); }
+    .nav-wa {
+      background: #25d366; color: #fff;
+      padding: 9px 20px; border-radius: 30px;
+      font-size: 13px; font-weight: 600; letter-spacing: .5px;
+      text-decoration: none; transition: opacity .2s;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .nav-wa:hover { opacity: .85; }
+    .nav-burger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .nav-burger span { display: block; width: 24px; height: 2px; background: var(--oro); border-radius: 2px; transition: .3s; }
+
+    /* ── HERO ── */
+    .hero {
+      height: 100vh; min-height: 600px;
+      position: relative; display: flex; align-items: center; justify-content: center;
+      text-align: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, #1a0c05 0%, #3d1f0d 40%, #5c2e14 70%, #2c1a0e 100%);
+    }
+    /* patrón de textura */
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30Z' fill='none' stroke='rgba(200,150,60,0.04)' stroke-width='1'/%3E%3C/svg%3E");
+      background-size: 60px 60px;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, transparent 30%, rgba(20,8,2,0.7) 100%);
+    }
+    .hero-content { position: relative; z-index: 2; padding: 20px; }
+    .hero-eyebrow {
+      font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500;
+      letter-spacing: 5px; text-transform: uppercase; color: var(--oro);
+      margin-bottom: 20px; opacity: 0;
+      animation: fadeUp .8s .2s forwards;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(56px, 10vw, 110px); font-weight: 600;
+      color: var(--crema); line-height: .95; letter-spacing: -1px;
+      margin-bottom: 8px; opacity: 0;
+      animation: fadeUp .8s .4s forwards;
+    }
+    .hero-title em { color: var(--oro); font-style: italic; }
+    .hero-subtitle {
+      font-size: 14px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--piedra); margin-bottom: 40px; font-weight: 300;
+      opacity: 0; animation: fadeUp .8s .6s forwards;
+    }
+    .hero-ctas {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp .8s .8s forwards;
+    }
+    .btn-primary {
+      background: var(--oro); color: var(--cafe);
+      padding: 14px 36px; border-radius: 2px;
+      font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      text-decoration: none; transition: all .25s;
+      border: 2px solid var(--oro);
+    }
+    .btn-primary:hover { background: transparent; color: var(--oro); }
+    .btn-outline {
+      border: 2px solid rgba(200,150,60,0.5); color: var(--crema);
+      padding: 14px 36px; border-radius: 2px;
+      font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+      text-decoration: none; transition: all .25s;
+    }
+    .btn-outline:hover { border-color: var(--oro); color: var(--oro); }
+    .hero-scroll {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(200,150,60,0.5); font-size: 10px; letter-spacing: 3px;
+      text-transform: uppercase; z-index: 2;
+      animation: bounce 2s infinite;
+    }
+    .hero-scroll svg { width: 20px; opacity: .5; }
+
+    /* ── SECCIÓN GENÉRICA ── */
+    .seccion {
+      padding: 100px 5%;
+      max-width: 1280px; margin: 0 auto;
+    }
+    .seccion-header { text-align: center; margin-bottom: 60px; }
+    .tag {
+      display: inline-block;
+      font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--oro); border: 1px solid rgba(200,150,60,0.35);
+      padding: 5px 16px; border-radius: 30px; margin-bottom: 18px;
+    }
+    .seccion-titulo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 58px); font-weight: 600;
+      line-height: 1.05; color: var(--cafe);
+    }
+    .seccion-titulo em { color: var(--terrac); font-style: italic; }
+    .seccion-desc {
+      margin-top: 18px; font-size: 15px; color: var(--humo);
+      max-width: 560px; margin-left: auto; margin-right: auto; line-height: 1.7;
+    }
+    .divider {
+      width: 50px; height: 2px;
+      background: linear-gradient(90deg, var(--oro), var(--terrac));
+      margin: 24px auto 0;
+    }
+
+    /* ── SOBRE NOSOTROS ── */
+    .sobre-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .sobre-img {
+      position: relative; border-radius: 2px; overflow: hidden;
+      aspect-ratio: 3/4;
+      background: linear-gradient(135deg, #3d1f0d, #7a3820);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .sobre-img-placeholder {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 80px; color: rgba(200,150,60,0.2);
+    }
+    .sobre-img::before {
+      content: ''; position: absolute;
+      top: 18px; left: 18px; right: -18px; bottom: -18px;
+      border: 2px solid rgba(200,150,60,0.25);
+      border-radius: 2px; z-index: -1;
+    }
+    .sobre-texto { }
+    .sobre-texto .tag { margin-bottom: 20px; }
+    .sobre-texto h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 3.5vw, 50px); font-weight: 600; line-height: 1.1;
+      color: var(--cafe); margin-bottom: 24px;
+    }
+    .sobre-texto h2 em { color: var(--terrac); font-style: italic; }
+    .sobre-texto p {
+      font-size: 15px; line-height: 1.8; color: var(--humo); margin-bottom: 16px;
+    }
+    .ubicacion-card {
+      margin-top: 32px; padding: 20px 24px;
+      background: var(--crema); border-left: 3px solid var(--oro);
+      border-radius: 2px;
+    }
+    .ubicacion-card p { margin: 0; font-size: 14px; color: var(--humo); line-height: 1.6; }
+    .ubicacion-card strong { color: var(--cafe); font-weight: 600; }
+    .ubicacion-card a { color: var(--terrac); text-decoration: none; }
+
+    /* ── MENÚ / PRODUCTOS ── */
+    .menu-bg {
+      background: var(--cafe);
+      padding: 100px 5%;
+    }
+    .menu-bg .seccion-titulo { color: var(--crema); }
+    .menu-bg .seccion-desc { color: var(--piedra); }
+    .menu-bg .tag { color: var(--oro); border-color: rgba(200,150,60,0.3); }
+
+    .tabs {
+      display: flex; gap: 0; justify-content: center;
+      margin-bottom: 50px; border-bottom: 1px solid rgba(200,150,60,0.2);
+      flex-wrap: wrap;
+    }
+    .tab {
+      background: none; border: none; cursor: pointer;
+      color: var(--piedra); font-family: 'Jost', sans-serif;
+      font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500;
+      padding: 14px 28px; position: relative; transition: color .25s;
+    }
+    .tab::after {
+      content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px;
+      background: var(--oro); transform: scaleX(0); transition: transform .3s;
+    }
+    .tab.activo, .tab:hover { color: var(--oro); }
+    .tab.activo::after, .tab:hover::after { transform: scaleX(1); }
+
+    .tab-content { display: none; }
+    .tab-content.activo { display: block; }
+
+    .menu-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px; max-width: 1100px; margin: 0 auto;
+    }
+    .menu-card {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(200,150,60,0.12);
+      border-radius: 4px; overflow: hidden;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .menu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+    .menu-card-img {
+      height: 180px;
+      background: linear-gradient(135deg, #3d1f0d 0%, #7a3820 50%, #5c2e14 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px; overflow: hidden; position: relative;
+    }
+    .menu-card-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(20,8,2,0.4), transparent);
+    }
+    .menu-card-emoji { z-index: 1; }
+    .menu-card-body { padding: 20px; }
+    .menu-card-cat {
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--oro); font-weight: 600; margin-bottom: 8px;
+    }
+    .menu-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 600; color: var(--crema);
+      margin-bottom: 8px; line-height: 1.2;
+    }
+    .menu-card p {
+      font-size: 12px; color: rgba(227,213,192,0.6);
+      line-height: 1.6; margin-bottom: 16px;
+    }
+    .menu-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .precio {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; font-weight: 600; color: var(--oro);
+    }
+    .precio span { font-size: 13px; font-weight: 400; }
+    .btn-pedir {
+      background: var(--terrac); color: #fff;
+      border: none; border-radius: 2px;
+      padding: 8px 18px; font-size: 11px;
+      letter-spacing: 1px; text-transform: uppercase;
+      font-weight: 600; cursor: pointer; transition: opacity .2s;
+    }
+    .btn-pedir:hover { opacity: .8; }
+
+    /* ── CENA ESPECIAL ── */
+    .cena-section {
+      padding: 100px 5%;
+      background: linear-gradient(135deg, #1a0c05 0%, #3d1f0d 100%);
+      position: relative; overflow: hidden;
+    }
+    .cena-section::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='rgba(200,150,60,0.04)' stroke-width='1'/%3E%3C/svg%3E");
+      background-size: 100px 100px;
+    }
+    .cena-inner {
+      max-width: 900px; margin: 0 auto; position: relative; z-index: 1;
+    }
+    .cena-header { text-align: center; margin-bottom: 60px; }
+    .cena-badge {
+      display: inline-block;
+      background: var(--oro); color: var(--cafe);
+      font-size: 10px; letter-spacing: 3px; font-weight: 700; text-transform: uppercase;
+      padding: 6px 20px; border-radius: 30px; margin-bottom: 24px;
+    }
+    .cena-titulo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 6vw, 72px); font-weight: 600;
+      color: var(--crema); line-height: 1; margin-bottom: 16px;
+    }
+    .cena-titulo em { color: var(--oro); font-style: italic; }
+    .cena-meta {
+      font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--piedra); font-weight: 300;
+    }
+
+    .tiempos { display: flex; flex-direction: column; gap: 2px; margin-bottom: 48px; }
+    .tiempo {
+      display: grid; grid-template-columns: 36px 1fr;
+      gap: 24px; align-items: start;
+      padding: 32px; border: 1px solid rgba(200,150,60,0.12);
+      background: rgba(255,255,255,0.03);
+      border-radius: 4px; transition: border-color .3s;
+    }
+    .tiempo:hover { border-color: rgba(200,150,60,0.35); }
+    .tiempo-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px; font-weight: 600;
+      color: rgba(200,150,60,0.2); line-height: 1; margin-top: -8px;
+    }
+    .tiempo-info { }
+    .tiempo-label {
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--oro); font-weight: 600; margin-bottom: 8px;
+    }
+    .tiempo-nombre {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px; font-weight: 600; color: var(--crema);
+      margin-bottom: 8px; line-height: 1.2;
+    }
+    .tiempo-desc { font-size: 13px; color: rgba(227,213,192,0.6); line-height: 1.7; }
+
+    .cena-extras {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 48px;
+    }
+    .cena-extra {
+      padding: 20px 24px; border: 1px solid rgba(200,150,60,0.15);
+      border-radius: 4px; background: rgba(255,255,255,0.02);
+    }
+    .cena-extra-icon { font-size: 24px; margin-bottom: 10px; }
+    .cena-extra p { font-size: 13px; color: var(--piedra); line-height: 1.5; margin: 0; }
+
+    .cena-cta {
+      text-align: center; padding: 40px;
+      border: 1px solid rgba(200,150,60,0.25);
+      border-radius: 4px; background: rgba(200,150,60,0.05);
+    }
+    .cena-precio {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 64px; font-weight: 600; color: var(--oro); line-height: 1;
+      margin-bottom: 8px;
+    }
+    .cena-precio-sub { font-size: 12px; color: var(--piedra); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 28px; }
+    .btn-reservar {
+      display: inline-block;
+      background: var(--oro); color: var(--cafe);
+      padding: 16px 48px; border-radius: 2px;
+      font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      text-decoration: none; transition: all .25s;
+    }
+    .btn-reservar:hover { background: var(--terrac); color: #fff; }
+
+    /* ── VACANTES ── */
+    .vacantes-bg {
+      background: var(--crema); padding: 100px 5%;
+    }
+    .vacantes-inner { max-width: 900px; margin: 0 auto; }
+    .vacantes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
+    .vacante-card {
+      background: #fff; border: 1px solid var(--piedra);
+      border-radius: 4px; padding: 28px; transition: box-shadow .3s, border-color .3s;
+    }
+    .vacante-card:hover { box-shadow: 0 8px 30px rgba(44,26,14,0.08); border-color: var(--oro); }
+    .vacante-tipo {
+      font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--oro); font-weight: 700; margin-bottom: 10px;
+    }
+    .vacante-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 600; color: var(--cafe);
+      margin-bottom: 12px;
+    }
+    .vacante-card p { font-size: 13px; color: var(--humo); line-height: 1.6; }
+    .vacantes-contacto {
+      margin-top: 48px; padding: 32px 36px;
+      background: var(--cafe); border-radius: 4px; color: var(--crema);
+    }
+    .vacantes-contacto h3 {
+      font-family: 'Cormorant Garamond', serif; font-size: 28px;
+      margin-bottom: 16px; font-weight: 600;
+    }
+    .vacantes-contacto p { font-size: 14px; color: var(--piedra); margin-bottom: 8px; }
+    .vacantes-contacto a { color: var(--oro); text-decoration: none; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #100702; padding: 60px 5% 30px;
+      border-top: 1px solid rgba(200,150,60,0.1);
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px; max-width: 1100px; margin: 0 auto 50px;
+    }
+    .footer-brand h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px; font-weight: 600; color: var(--oro);
+      margin-bottom: 12px;
+    }
+    .footer-brand p { font-size: 13px; color: rgba(200,175,140,0.5); line-height: 1.7; }
+    .footer-col h4 {
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--oro); font-weight: 600; margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 10px; }
+    .footer-col a { font-size: 13px; color: rgba(200,175,140,0.5); text-decoration: none; transition: color .2s; }
+    .footer-col a:hover { color: var(--oro); }
+    .footer-bottom {
+      max-width: 1100px; margin: 0 auto;
+      padding-top: 24px; border-top: 1px solid rgba(200,150,60,0.1);
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 11px; color: rgba(200,175,140,0.3); letter-spacing: 1px;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-fb {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: rgba(200,175,140,0.5); font-size: 13px; text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-fb:hover { color: var(--oro); }
+
+    /* ── MODAL WHATSAPP ── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(10,4,1,0.85); backdrop-filter: blur(6px);
+      display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-overlay.abierto { display: flex; }
+    .modal-box {
+      background: #1c0e06; border: 1px solid rgba(200,150,60,0.25);
+      border-radius: 6px; width: 100%; max-width: 420px;
+      padding: 40px; position: relative;
+    }
+    .modal-cerrar {
+      position: absolute; top: 16px; right: 16px;
+      background: none; border: none; color: var(--piedra);
+      font-size: 22px; cursor: pointer; line-height: 1;
+    }
+    .modal-cerrar:hover { color: var(--oro); }
+    .modal-box h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px; font-weight: 600; color: var(--crema);
+      margin-bottom: 6px;
+    }
+    .modal-producto-nombre { color: var(--oro); font-style: italic; }
+    .modal-box p { font-size: 13px; color: var(--piedra); margin-bottom: 28px; line-height: 1.6; }
+    .modal-wa {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: #25d366; color: #fff;
+      padding: 14px 28px; border-radius: 4px;
+      font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      text-decoration: none; transition: opacity .2s; width: 100%;
+    }
+    .modal-wa:hover { opacity: .85; }
+
+    /* ── ANIMACIONES ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links, .nav-wa { display: none; }
+      .nav-burger { display: flex; }
+      nav.open .nav-links {
+        display: flex; flex-direction: column; gap: 0;
+        position: absolute; top: 100%; left: 0; right: 0;
+        background: rgba(20,8,2,0.98); padding: 20px 5%;
+      }
+      nav.open .nav-links a { padding: 14px 0; border-bottom: 1px solid rgba(200,150,60,0.1); }
+      nav.open .nav-wa { display: block; margin: 16px 5%; }
+      .sobre-grid { grid-template-columns: 1fr; }
+      .sobre-img { aspect-ratio: 16/9; order: -1; }
+      .sobre-img::before { display: none; }
+      .vacantes-grid { grid-template-columns: 1fr; }
+      .cena-extras { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .tabs { justify-content: flex-start; overflow-x: auto; padding-bottom: 0; flex-wrap: nowrap; }
+      .tab { white-space: nowrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a href="#inicio" class="nav-logo">El Campanario</a>
+    <ul class="nav-links">
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#menu">Menú</a></li>
+      <li><a href="#cena-especial">Cenas Especiales</a></li>
+      <li><a href="#vacantes">Únete</a></li>
+    </ul>
+    <a href="https://wa.me/524439025810" target="_blank" class="nav-wa">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Reservar
+    </a>
+    <div class="nav-burger" id="burger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Morelia, Michoacán · Centro Histórico</p>
+      <h1 class="hero-title">El<br><em>Campanario</em></h1>
+      <p class="hero-subtitle">Tradición · Sabor · Historia</p>
+      <div class="hero-ctas">
+        <a href="#menu" class="btn-primary">Ver Menú</a>
+        <a href="#cena-especial" class="btn-outline">Cenas Especiales</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      Explorar
+    </div>
+  </section>
+
+  <!-- SOBRE NOSOTROS -->
+  <section class="seccion" id="nosotros">
+    <div class="sobre-grid">
+      <div class="sobre-img">
+        <span class="sobre-img-placeholder">🔔</span>
+      </div>
+      <div class="sobre-texto">
+        <span class="tag">Nuestra Historia</span>
+        <h2>Frente a la <em>Catedral</em>,<br>en el corazón de Morelia</h2>
+        <p>En El Campanario encontrarás la mejor cocina michoacana y platillos internacionales, servidos en un ambiente que respira la historia de nuestra ciudad colonial.</p>
+        <p>Somos una cadena de restaurantes comprometida con la calidad, el sabor auténtico y la calidez morelense. Cada visita es una experiencia que mezcla tradición e innovación en cada bocado.</p>
+        <div class="ubicacion-card">
+          <p><strong>📍 Centro Histórico</strong><br>
+          Ignacio Zaragoza #37, frente a la Catedral de Morelia</p>
+          <br>
+          <p><strong>📞 Reservaciones</strong><br>
+          <a href="tel:4439025810">443 902 5810</a></p>
+          <br>
+          <p><strong>📘 Síguenos</strong><br>
+          <a href="https://www.facebook.com/ElCampanarioMorelia/?locale=es_LA" target="_blank">@ElCampanarioMorelia</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENÚ -->
+  <section class="menu-bg" id="menu">
+    <div style="max-width:1100px;margin:0 auto;">
+      <div class="seccion-header">
+        <span class="tag">Lo que ofrecemos</span>
+        <h2 class="seccion-titulo">Nuestro <em>Menú</em></h2>
+        <p class="seccion-desc">Desde lo más tradicional de Michoacán hasta nuestros desayunos clásicos. Hay algo para todos en El Campanario.</p>
+        <div class="divider"></div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab activo" data-tab="michoacano">Tradición Michoacana</button>
+        <button class="tab" data-tab="desayunos">Desayunos</button>
+        <button class="tab" data-tab="clasicos">Clásicos</button>
+      </div>
+
+      <!-- MICHOACANO -->
+      <div class="tab-content activo" id="tab-michoacano">
+        <div class="menu-grid">
+          <div class="menu-card">
+            <div class="menu-card-img"><img src="imagenes/chicharronensalsa1.webp" alt="Chicharrón en Salsa" style="width:100%;height:100%;object-fit:cover;"></div>
+            <div class="menu-card-body">
+              <p class="menu-card-cat">Guisados</p>
+              <h3>Chicharrón en Salsa</h3>
+              <p>Chicharrón en salsa roja de la casa, acompañado de arroz y frijoles de olla.</p>
+              <div class="menu-card-footer">
+                <span class="precio"><span>$</span>85</span>
+                <button class="btn-pedir" data-producto="Chicharrón en Salsa" data-precio="$85">Pedir</button>
+              </div>
+            </div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-img"><img src="imagenes/corundasmichoacanas1.webp" alt="Corundas Michoacanas" style="width:100%;height:100%;object-fit:cover;"></div>
+            <div class="menu-card-body">
+              <p class="menu-card-cat">Antojitos Michoacanos</p>
+              <h3>Corundas Michoacanas</h3>
+              <p>Un clásico de la cocina purépecha. Suaves, auténticas y con todo el sabor de Michoacán.</p>
+              <div class="menu-card-footer">
+                <span class="precio"><span>$</span>75</span>
+                <button class="btn-pedir" data-producto="Corundas Michoacanas" data-precio="$75">Pedir</button>
+              </div>
+            </div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-img"><img src="imagenes/chilaquilesconhuevo1.webp" alt="Chilaquiles con Huevo" style="width:100%;height:100%;object-fit:cover;"></div>
+            <div class="menu-card-body">
+              <p class="menu-card-cat">Guisados</p>
+              <h3>Chilaquiles con Huevo</h3>
+              <p>Chilaquiles en salsa verde o roja, con huevo al gusto, crema, queso y cebolla.</p>
+              <div class="menu-card-footer">
+                <span class="precio"><span>$</span>95</span>
+                <button class="btn-pedir" data-producto="Chilaquiles con Huevo" data-precio="$95">Pedir</button>
+              </div>
+            </div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-img"><img src="imagenes/chilaquilesconpollo1.webp" alt="Chilaquiles con Pollo" style="width:100%;height:100%;object-fit:cover;"></div>
+            <div class="menu-card-body">
+              <p class="menu-card-cat">Platillos</p>
+              <h3>Chilaquiles con Pollo</h3>
+              <p>Chilaquiles en salsa verde o roja, con pollo deshebrado, crema, queso y cebolla.</p>
+              <div class="menu-card-footer">
+                <span class="precio"><span>$</span>95</span>
+                <button class="btn-pedir" data-producto="Chilaquiles con Pollo" data-precio="$95">Pedir</button>
+              </div>
+            </div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-img"><img src="imagenes/crepacampanario1.webp" alt="Crepa Campanario" style="width:100%;height:100%;object-fit:cover;"></div>
+            <div class="menu-card-body">
+              <p class="menu-card-cat">Especialidades</p>
+              <h3>Crepa Campanario</h3>
+              <p>Nuestra crepa insignia, rellena con los mejores ingredientes de la casa. Una experiencia dulce y única.</p>
+              <div class="menu-card-footer">
+                <span class="precio"><span>$</span>100</span>
+                <button class="btn-pedir" data-producto="Crepa Campanario" data-precio="$100">Pedir</button>
+              </div>
+            </div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-img"><img src="imagenes/hotcakes1.webp" alt="Hotcakes" style="width:100%;height:100%;object-fit:cover;"></div>
+            <div class="menu-card-body">
+              <p class="menu-card-cat">Desayunos</p>
+              <h3>Hotcakes</h3>
+              <p>Esponjosos hotcakes servidos con mantequilla, miel de maple o mermelada de la casa.</p>
+              <div class="menu-card-footer">
+                <span class="precio"><span>$</span>50</span>
+                <button class="btn-pedir" data-producto="Hotcakes" data-precio="$50">Pedir</button>
+              </div>
+            </div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-img"><img src="imagenes/enchiladassuizas1.webp" alt="Enchiladas Suizas" style="width:100%;height:100%;object-fit:cover;"></div>
+            <div class="menu-card-body">
+              <p class="menu-card-cat">Platillos Clásicos</p>
+              <h3>Enchiladas Suizas</h3>
+              <p>Tortillas bañadas en salsa verde, rellenas de pollo, gratinadas con queso Oaxaca y crema.</p>
+              <div class="menu-card-footer">
+                <span class="precio"><span>$</span>105</span>
+                <button class="btn-pedir" data-producto="Enchiladas Suizas" data-precio="$105">Pedir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESAYUNOS -->
+      <div class="tab-content" id="tab-desayunos">
+        <div class="menu-grid">
+          <div class="menu-card">
+            <div class="menu-card-img"><span class="menu-card-emoji">🥞</span></div>
+            <div class="menu-card-body">
+              <p class="menu-card-cat">Desayunos</p>
+              <h3>Hotcakes</h3>
+              <p>Esponjosos hotcakes servidos con mantequilla, miel de maple o mermelada de la casa.</p>
+              <div class="menu-card-footer">
+                <span class="precio"><span>$</span>50</span>
+                <button class="btn-pedir" data-producto="Hotcakes" data-precio="$50">Pedir</button>
+              </div>
+            </div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-img"><span class="menu-card-emoji">🍗</span></div>
+            <div class="menu-card-body">
+              <p class="menu-card-cat">Desayunos</p>
+              <h3>Chilaquiles con Pollo</h3>
+              <p>El desayuno morelense por excelencia. Con pollo, crema, queso y frijoles.</p>
+              <div class="menu-card-footer">
+                <span class="precio"><span>$</span>95</span>
+                <button class="btn-pedir" data-producto="Chilaquiles con Pollo" data-precio="$95">Pedir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CLÁSICOS -->
+      <div class="tab-content" id="tab-clasicos">
+        <div class="menu-grid">
+          <div class="menu-card">
+            <div class="menu-card-img"><span class="menu-card-emoji">🧀</span></div>
+            <div class="menu-card-body">
+              <p class="menu-card-cat">Platillos Clásicos</p>
+              <h3>Enchiladas Suizas</h3>
+              <p>Tortillas bañadas en salsa verde, rellenas de pollo, gratinadas con queso Oaxaca y crema.</p>
+              <div class="menu-card-footer">
+                <span class="precio"><span>$</span>105</span>
+                <button class="btn-pedir" data-producto="Enchiladas Suizas" data-precio="$105">Pedir</button>
+              </div>
+            </div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-img"><span class="menu-card-emoji">🫔</span></div>
+            <div class="menu-card-body">
+              <p class="menu-card-cat">Platillos Clásicos</p>
+              <h3>Corundas Michoacanas</h3>
+              <p>Un clásico de la cocina purépecha, suaves y auténticas.</p>
+              <div class="menu-card-footer">
+                <span class="precio"><span>$</span>75</span>
+                <button class="btn-pedir" data-producto="Corundas Michoacanas" data-precio="$75">Pedir</button>
+              </div>
+            </div>
+          </div>
+          <div class="menu-card">
+            <div class="menu-card-img"><span class="menu-card-emoji">🌶️</span></div>
+            <div class="menu-card-body">
+              <p class="menu-card-cat">Platillos Clásicos</p>
+              <h3>Chicharrón en Salsa</h3>
+              <p>Chicharrón en salsa roja, con arroz y frijoles de olla.</p>
+              <div class="menu-card-footer">
+                <span class="precio"><span>$</span>85</span>
+                <button class="btn-pedir" data-producto="Chicharrón en Salsa" data-precio="$85">Pedir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CENA ESPECIAL -->
+  <section class="cena-section" id="cena-especial">
+    <div class="cena-inner">
+      <div class="cena-header">
+        <span class="cena-badge">✦ Evento Especial ✦</span>
+        <h2 class="cena-titulo">Romance<br><em>Italiano</em></h2>
+        <p class="cena-meta">Cena Especial · 3 Tiempos · 14 de Febrero · 8:00 PM</p>
+      </div>
+
+      <div class="tiempos">
+        <div class="tiempo">
+          <div class="tiempo-num">01</div>
+          <div class="tiempo-info">
+            <p class="tiempo-label">Aperitivo</p>
+            <p class="tiempo-nombre">Mozzarella Fresca al Centro</p>
+            <p class="tiempo-desc">Acompañada de jitomates confitados, pesto de albahaca y pan artesanal tostado.</p>
+          </div>
+        </div>
+        <div class="tiempo">
+          <div class="tiempo-num">02</div>
+          <div class="tiempo-info">
+            <p class="tiempo-label">Plato Principal</p>
+            <p class="tiempo-nombre">Ravioles Ricotta &amp; Espinacas</p>
+            <p class="tiempo-desc">Ravioles rellenos de queso ricotta y espinacas en salsa cremosa italiana con vino blanco.</p>
+          </div>
+        </div>
+        <div class="tiempo">
+          <div class="tiempo-num">03</div>
+          <div class="tiempo-info">
+            <p class="tiempo-label">Dulzura</p>
+            <p class="tiempo-nombre">Tiramisú Italiano</p>
+            <p class="tiempo-desc">Suave crema de mascarpone sobre soletas al café con notas de cacao.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cena-extras">
+        <div class="cena-extra">
+          <div class="cena-extra-icon">🍷</div>
+          <p><strong style="color:var(--oro)">Maridaje incluido</strong><br>Botella de vino blanco seco o espumoso para la pareja.</p>
+        </div>
+        <div class="cena-extra">
+          <div class="cena-extra-icon">🕯️</div>
+          <p><strong style="color:var(--oro)">Decoración romántica</strong><br>Ambiente íntimo a la luz de las velas para una noche inolvidable.</p>
+        </div>
+      </div>
+
+      <div class="cena-cta">
+        <div class="cena-precio">$2,349</div>
+        <p class="cena-precio-sub">Por pareja · Incluye los 3 tiempos y maridaje</p>
+        <a href="https://wa.me/524439025810?text=¡Hola! Quiero reservar para la Cena Romance Italiano del 14 de febrero a las 8:00 PM. Somos 2 personas." target="_blank" class="btn-reservar">Reservar mi lugar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- VACANTES -->
+  <section class="vacantes-bg" id="vacantes">
+    <div class="vacantes-inner">
+      <div class="seccion-header">
+        <span class="tag">Trabaja con nosotros</span>
+        <h2 class="seccion-titulo">Únete a nuestra <em>familia</em></h2>
+        <p class="seccion-desc">Estamos en crecimiento y buscamos personas apasionadas. Hay vacantes para todos los perfiles.</p>
+        <div class="divider"></div>
+      </div>
+
+      <div class="vacantes-grid">
+        <div class="vacante-card">
+          <p class="vacante-tipo">Área Operativa</p>
+          <h3>Personal de Cocina</h3>
+          <p>Cocineros, ayudantes de cocina y personal de preparación. Experiencia deseable pero no indispensable.</p>
+        </div>
+        <div class="vacante-card">
+          <p class="vacante-tipo">Área Operativa</p>
+          <h3>Meseros &amp; Hostess</h3>
+          <p>Buscamos personas con actitud de servicio, proactivas y con gusto por la atención al cliente.</p>
+        </div>
+        <div class="vacante-card">
+          <p class="vacante-tipo">Área Administrativa</p>
+          <h3>Puestos Administrativos</h3>
+          <p>Caja, supervisión, compras y más. Si tienes experiencia en el giro restaurantero, ¡nos interesas!</p>
+        </div>
+        <div class="vacante-card">
+          <p class="vacante-tipo">Diversas Áreas</p>
+          <h3>Más Vacantes</h3>
+          <p>Tenemos diferentes categorías abiertas. Preséntate con tu CV o envíalo por correo.</p>
+        </div>
+      </div>
+
+      <div class="vacantes-contacto">
+        <h3>¿Te interesa unirte?</h3>
+        <p>📍 Preséntate con tu CV en: <strong>Av. Morelos Sur #71, Col. Centro, Morelia, Mich.</strong></p>
+        <p>📧 O envíalo a: <a href="mailto:elcampanariogerencia@gmail.com">elcampanariogerencia@gmail.com</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h2>El Campanario</h2>
+        <p>Restaurante tradicional en el corazón del Centro Histórico de Morelia. Sabor, historia y calidez michoacana en cada visita.</p>
+        <br>
+        <a href="https://www.facebook.com/ElCampanarioMorelia/?locale=es_LA" target="_blank" class="footer-fb">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          @ElCampanarioMorelia
+        </a>
+      </div>
+      <div class="footer-col">
+        <h4>Menú</h4>
+        <ul>
+          <li><a href="#menu">Tradición Michoacana</a></li>
+          <li><a href="#menu">Desayunos</a></li>
+          <li><a href="#menu">Platillos Clásicos</a></li>
+          <li><a href="#cena-especial">Cenas Especiales</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="tel:4439025810">443 902 5810</a></li>
+          <li><a href="mailto:elcampanariogerencia@gmail.com">elcampanariogerencia@gmail.com</a></li>
+          <li><a href="#nosotros">Ignacio Zaragoza #37</a></li>
+          <li><a href="#nosotros">Centro Histórico, Morelia</a></li>
+          <li><a href="#vacantes">Vacantes</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 El Campanario Morelia · Todos los derechos reservados</span>
+      <span>Hecho con ♥ en Morelia, Mich.</span>
+    </div>
+  </footer>
+
+  <!-- MODAL WHATSAPP -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-box">
+      <button class="modal-cerrar" id="modal-cerrar">&times;</button>
+      <h3>Hacer un pedido</h3>
+      <p>Estás a punto de contactarnos por WhatsApp para ordenar: <strong class="modal-producto-nombre" id="modal-nombre"></strong>. Te responderemos a la brevedad.</p>
+      <a href="#" id="modal-wa-btn" target="_blank" class="modal-wa">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Ordenar por WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       ASISTENTE IA – ESTILOS
+  ══════════════════════════════════════════════ -->
+  <style>
+    /* Botón flotante */
+    #ai-fab {
+      position: fixed; bottom: 28px; right: 28px; z-index: 300;
+      width: 60px; height: 60px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--terrac), var(--oro));
+      border: none; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(155,74,43,0.45);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .25s, box-shadow .25s;
+    }
+    #ai-fab:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(155,74,43,0.55); }
+    #ai-fab svg { width: 28px; height: 28px; fill: #fff; }
+    #ai-fab .ai-fab-badge {
+      position: absolute; top: -4px; right: -4px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #25d366; border: 2px solid var(--blanco);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; color: #fff; font-weight: 700;
+    }
+
+    /* Ventana del chat */
+    #ai-chat {
+      position: fixed; bottom: 100px; right: 28px; z-index: 300;
+      width: 360px; max-height: 520px;
+      background: #1a0d07;
+      border: 1px solid rgba(200,150,60,0.25);
+      border-radius: 16px;
+      display: none; flex-direction: column;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.55);
+      overflow: hidden;
+      font-family: 'Jost', sans-serif;
+    }
+    #ai-chat.abierto { display: flex; animation: chatIn .25s ease; }
+    @keyframes chatIn {
+      from { opacity: 0; transform: translateY(16px) scale(.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Header del chat */
+    .chat-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 16px 18px;
+      background: linear-gradient(90deg, #2c1008, #3d1f0d);
+      border-bottom: 1px solid rgba(200,150,60,0.15);
+    }
+    .chat-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--terrac), var(--oro));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .chat-header-info { flex: 1; }
+    .chat-header-info strong {
+      display: block; font-size: 14px; color: var(--crema);
+      font-weight: 600; letter-spacing: .3px;
+    }
+    .chat-header-info span {
+      font-size: 11px; color: #4caf50;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .chat-header-info span::before {
+      content: ''; width: 7px; height: 7px;
+      background: #4caf50; border-radius: 50%; display: inline-block;
+    }
+    .chat-close {
+      background: none; border: none; color: rgba(200,175,140,0.4);
+      font-size: 20px; cursor: pointer; line-height: 1; padding: 0;
+      transition: color .2s;
+    }
+    .chat-close:hover { color: var(--oro); }
+
+    /* Área de mensajes */
+    #chat-mensajes {
+      flex: 1; overflow-y: auto; padding: 16px;
+      display: flex; flex-direction: column; gap: 12px;
+      scrollbar-width: thin; scrollbar-color: rgba(200,150,60,0.2) transparent;
+    }
+    #chat-mensajes::-webkit-scrollbar { width: 4px; }
+    #chat-mensajes::-webkit-scrollbar-thumb { background: rgba(200,150,60,0.2); border-radius: 4px; }
+
+    .msg {
+      max-width: 85%; font-size: 13.5px; line-height: 1.55;
+      padding: 10px 14px; border-radius: 14px; word-break: break-word;
+    }
+    .msg-bot {
+      background: rgba(255,255,255,0.07);
+      color: var(--piedra); border-bottom-left-radius: 4px;
+      align-self: flex-start;
+    }
+    .msg-user {
+      background: linear-gradient(135deg, var(--terrac), #7a3018);
+      color: #fff; border-bottom-right-radius: 4px;
+      align-self: flex-end;
+    }
+    .msg-typing {
+      display: flex; gap: 5px; align-items: center;
+      padding: 12px 16px;
+    }
+    .msg-typing span {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: rgba(200,150,60,0.5);
+      animation: blink 1.2s infinite;
+    }
+    .msg-typing span:nth-child(2) { animation-delay: .2s; }
+    .msg-typing span:nth-child(3) { animation-delay: .4s; }
+    @keyframes blink {
+      0%,80%,100% { opacity: .3; transform: scale(.8); }
+      40%          { opacity: 1;  transform: scale(1); }
+    }
+
+    /* Sugerencias rápidas */
+    #chat-sugerencias {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      padding: 0 16px 12px;
+    }
+    .sugerencia {
+      background: rgba(200,150,60,0.1); border: 1px solid rgba(200,150,60,0.2);
+      color: var(--oro); font-size: 11px; padding: 5px 12px;
+      border-radius: 20px; cursor: pointer; transition: all .2s;
+      font-family: 'Jost', sans-serif; white-space: nowrap;
+    }
+    .sugerencia:hover { background: rgba(200,150,60,0.2); border-color: var(--oro); }
+
+    /* Input */
+    .chat-input-wrap {
+      display: flex; gap: 8px; align-items: center;
+      padding: 12px 14px;
+      border-top: 1px solid rgba(200,150,60,0.1);
+      background: rgba(0,0,0,0.2);
+    }
+    #chat-input {
+      flex: 1; background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(200,150,60,0.15);
+      border-radius: 24px; padding: 9px 16px;
+      color: var(--crema); font-size: 13px;
+      font-family: 'Jost', sans-serif; outline: none;
+      transition: border-color .2s;
+    }
+    #chat-input::placeholder { color: rgba(200,175,140,0.3); }
+    #chat-input:focus { border-color: rgba(200,150,60,0.4); }
+    #chat-send {
+      width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--terrac), var(--oro));
+      border: none; cursor: pointer; display: flex;
+      align-items: center; justify-content: center;
+      transition: opacity .2s;
+    }
+    #chat-send:hover { opacity: .85; }
+    #chat-send svg { width: 16px; height: 16px; fill: #fff; }
+
+    @media (max-width: 480px) {
+      #ai-chat { width: calc(100vw - 32px); right: 16px; bottom: 90px; }
+      #ai-fab  { right: 16px; bottom: 16px; }
+    }
+  </style>
+
+  <!-- ══════════════════════════════════════════════
+       ASISTENTE IA – HTML
+  ══════════════════════════════════════════════ -->
+
+  <!-- Botón flotante -->
+  <button id="ai-fab" title="Asistente del restaurante">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l5.07-1.36A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+    <span class="ai-fab-badge">IA</span>
+  </button>
+
+  <!-- Ventana de chat -->
+  <div id="ai-chat">
+    <div class="chat-header">
+      <div class="chat-avatar">🔔</div>
+      <div class="chat-header-info">
+        <strong>Asistente El Campanario</strong>
+        <span>En línea ahora</span>
+      </div>
+      <button class="chat-close" id="chat-close">&times;</button>
+    </div>
+
+    <div id="chat-mensajes">
+      <div class="msg msg-bot">¡Hola! Soy el asistente virtual de <strong>El Campanario</strong> 🔔<br><br>Puedo ayudarte con información del menú, precios, reservaciones y más. ¿En qué te puedo ayudar?</div>
+    </div>
+
+    <div id="chat-sugerencias">
+      <button class="sugerencia">¿Qué platillos tienen?</button>
+      <button class="sugerencia">¿Cómo hago una reservación?</button>
+      <button class="sugerencia">¿Dónde están ubicados?</button>
+      <button class="sugerencia">¿Tienen cena especial?</button>
+    </div>
+
+    <div class="chat-input-wrap">
+      <input id="chat-input" type="text" placeholder="Escribe tu pregunta..." maxlength="300" autocomplete="off">
+      <button id="chat-send">
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const WA = '524439025810';
+
+    // BURGER
+    document.getElementById('burger').addEventListener('click', () => {
+      document.getElementById('navbar').classList.toggle('open');
+    });
+
+    // TABS MENÚ
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('activo'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('activo'));
+        tab.classList.add('activo');
+        document.getElementById('tab-' + tab.dataset.tab).classList.add('activo');
+      });
+    });
+
+    // MODAL PEDIR
+    const overlay = document.getElementById('modal-overlay');
+    const modalNombre = document.getElementById('modal-nombre');
+    const modalWaBtn = document.getElementById('modal-wa-btn');
+
+    document.querySelectorAll('.btn-pedir').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const producto = btn.dataset.producto;
+        const precio = btn.dataset.precio;
+        modalNombre.textContent = producto + (precio ? ' — ' + precio : '');
+        const msg = encodeURIComponent(`¡Hola! Me gustaría ordenar: ${producto}${precio ? ' (' + precio + ')' : ''}. ¿Está disponible?`);
+        modalWaBtn.href = `https://wa.me/${WA}?text=${msg}`;
+        overlay.classList.add('abierto');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    document.getElementById('modal-cerrar').addEventListener('click', cerrar);
+    overlay.addEventListener('click', e => { if (e.target === overlay) cerrar(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrar(); });
+    function cerrar() {
+      overlay.classList.remove('abierto');
+      document.body.style.overflow = '';
+    }
+
+    // NAVBAR scroll
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      nav.style.padding = window.scrollY > 60 ? '12px 5%' : '18px 5%';
+    });
+
+    // ══════════════════════════════════════════════
+    // ASISTENTE IA
+    // ══════════════════════════════════════════════
+    const SYSTEM_PROMPT = `Eres el asistente virtual de El Campanario, una cadena de restaurantes en Morelia, Michoacán. 
+Respondes en español, de forma amable, breve y cálida. Solo hablas sobre el restaurante.
+
+INFORMACIÓN DEL RESTAURANTE:
+- Nombre: El Campanario Morelia
+- Ubicación: Ignacio Zaragoza #37, Centro Histórico de Morelia, frente a la Catedral
+- También en: Av. Morelos Sur #71, Col. Centro (oficinas/RRHH)
+- Teléfono reservaciones: 443 902 5810
+- Facebook: @ElCampanarioMorelia
+- Correo: elcampanariogerencia@gmail.com
+
+MENÚ Y PRECIOS:
+Tradición Michoacana:
+- Chicharrón en Salsa: $85
+- Corundas Michoacanas: $75
+- Chilaquiles con Huevo: $95
+- Chilaquiles con Pollo: $95
+- Crepa Campanario: $100
+- Hotcakes: $50
+- Enchiladas Suizas: $105
+
+Cena Especial (Romance Italiano, 14 de febrero):
+- 3 tiempos: Aperitivo (mozzarella fresca con jitomates confitados, pesto de albahaca y pan artesanal), Plato principal (ravioles de ricotta y espinacas en salsa cremosa italiana con vino blanco), Postre (tiramisú italiano)
+- Maridaje: botella de vino blanco seco o espumoso incluida
+- Decoración romántica a la luz de las velas
+- Precio: $2,349 por pareja
+- Hora: 8:00 PM
+
+VACANTES: Presentar CV en Av. Morelos Sur #71 o enviar a elcampanariogerencia@gmail.com. Hay puestos operativos y administrativos.
+
+Si preguntan por reservaciones, diles que llamen al 443 902 5810 o escriban por WhatsApp.
+Si preguntan algo que no sabes, di que pueden contactar directamente al restaurante.
+Responde siempre en máximo 3-4 oraciones cortas.`;
+
+    const historial = [];
+    const fab = document.getElementById('ai-fab');
+    const chatBox = document.getElementById('ai-chat');
+    const chatClose = document.getElementById('chat-close');
+    const chatMensajes = document.getElementById('chat-mensajes');
+    const chatInput = document.getElementById('chat-input');
+    const chatSend = document.getElementById('chat-send');
+    const sugerencias = document.getElementById('chat-sugerencias');
+
+    fab.addEventListener('click', () => {
+      chatBox.classList.add('abierto');
+      fab.style.display = 'none';
+      chatInput.focus();
+    });
+    chatClose.addEventListener('click', () => {
+      chatBox.classList.remove('abierto');
+      fab.style.display = 'flex';
+    });
+
+    // Sugerencias rápidas
+    document.querySelectorAll('.sugerencia').forEach(btn => {
+      btn.addEventListener('click', () => {
+        enviarMensaje(btn.textContent);
+        sugerencias.style.display = 'none';
+      });
+    });
+
+    chatInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); enviar(); }
+    });
+    chatSend.addEventListener('click', enviar);
+
+    function enviar() {
+      const texto = chatInput.value.trim();
+      if (!texto) return;
+      chatInput.value = '';
+      sugerencias.style.display = 'none';
+      enviarMensaje(texto);
+    }
+
+    function agregarMensaje(texto, esUsuario) {
+      const div = document.createElement('div');
+      div.className = 'msg ' + (esUsuario ? 'msg-user' : 'msg-bot');
+      div.innerHTML = texto;
+      chatMensajes.appendChild(div);
+      chatMensajes.scrollTop = chatMensajes.scrollHeight;
+      return div;
+    }
+
+    function mostrarTyping() {
+      const div = document.createElement('div');
+      div.className = 'msg msg-bot msg-typing';
+      div.id = 'typing-indicator';
+      div.innerHTML = '<span></span><span></span><span></span>';
+      chatMensajes.appendChild(div);
+      chatMensajes.scrollTop = chatMensajes.scrollHeight;
+    }
+
+    function quitarTyping() {
+      const t = document.getElementById('typing-indicator');
+      if (t) t.remove();
+    }
+
+    async function enviarMensaje(texto) {
+      agregarMensaje(texto, true);
+      historial.push({ role: 'user', content: texto });
+      mostrarTyping();
+      chatSend.disabled = true;
+      chatInput.disabled = true;
+
+      try {
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-20250514',
+            max_tokens: 1000,
+            system: SYSTEM_PROMPT,
+            messages: historial
+          })
+        });
+        const data = await res.json();
+        const respuesta = data.content?.[0]?.text || 'Lo siento, hubo un problema. Por favor contáctanos al 443 902 5810.';
+        quitarTyping();
+        historial.push({ role: 'assistant', content: respuesta });
+        agregarMensaje(respuesta.replace(/\n/g, '<br>'), false);
+      } catch (err) {
+        quitarTyping();
+        agregarMensaje('Hubo un error de conexión. Llámanos al <strong>443 902 5810</strong> o escríbenos por WhatsApp.', false);
+      } finally {
+        chatSend.disabled = false;
+        chatInput.disabled = false;
+        chatInput.focus();
+      }
+    }
+  </script>
+</body>
+</html>
