@@ -464,6 +464,17 @@
     }
     .modal-producto-nombre { color: var(--oro); font-style: italic; }
     .modal-box p { font-size: 13px; color: var(--piedra); margin-bottom: 28px; line-height: 1.6; }
+    .modal-img-wrap {
+      width: calc(100% + 80px); margin: -40px -40px 24px;
+      height: 180px; overflow: hidden; border-radius: 6px 6px 0 0;
+      background: linear-gradient(135deg, #3d1f0d, #7a3820);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 64px;
+    }
+    .modal-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .modal-img-wrap.sin-imagen { display: flex; }
     .modal-wa {
       display: flex; align-items: center; justify-content: center; gap: 10px;
       background: #25d366; color: #fff;
@@ -923,6 +934,7 @@
   <div class="modal-overlay" id="modal-overlay">
     <div class="modal-box">
       <button class="modal-cerrar" id="modal-cerrar">&times;</button>
+      <div class="modal-img-wrap" id="modal-img-wrap"></div>
       <h3>Hacer un pedido</h3>
       <p>Estás a punto de contactarnos por WhatsApp para ordenar: <strong class="modal-producto-nombre" id="modal-nombre"></strong>. Te responderemos a la brevedad.</p>
       <a href="#" id="modal-wa-btn" target="_blank" class="modal-wa">
@@ -1154,23 +1166,64 @@
     const overlay = document.getElementById('modal-overlay');
     const modalNombre = document.getElementById('modal-nombre');
     const modalWaBtn = document.getElementById('modal-wa-btn');
+    const modalImgWrap = document.getElementById('modal-img-wrap');
 
-    document.querySelectorAll('.btn-pedir').forEach(btn => {
-      btn.addEventListener('click', () => {
+    function abrirModal(producto, precio, imgSrc, emoji) {
+      modalNombre.textContent = producto + (precio ? ' — ' + precio : '');
+      const msg = encodeURIComponent(`¡Hola! Me gustaría ordenar: ${producto}${precio ? ' (' + precio + ')' : ''}. ¿Está disponible?`);
+      modalWaBtn.href = `https://wa.me/${WA}?text=${msg}`;
+
+      // Imagen o emoji en el modal
+      modalImgWrap.innerHTML = '';
+      if (imgSrc) {
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.alt = producto;
+        modalImgWrap.appendChild(img);
+      } else {
+        modalImgWrap.textContent = emoji || '🍽️';
+      }
+
+      overlay.classList.add('abierto');
+      document.body.style.overflow = 'hidden';
+
+      // Permite cerrar con el botón atrás del celular
+      history.pushState({ modal: true }, '');
+    }
+
+    // Toda la card abre el modal
+    document.querySelectorAll('.menu-card').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', (e) => {
+        const btn = card.querySelector('.btn-pedir');
+        if (!btn) return;
         const producto = btn.dataset.producto;
-        const precio = btn.dataset.precio;
-        modalNombre.textContent = producto + (precio ? ' — ' + precio : '');
-        const msg = encodeURIComponent(`¡Hola! Me gustaría ordenar: ${producto}${precio ? ' (' + precio + ')' : ''}. ¿Está disponible?`);
-        modalWaBtn.href = `https://wa.me/${WA}?text=${msg}`;
-        overlay.classList.add('abierto');
-        document.body.style.overflow = 'hidden';
+        const precio   = btn.dataset.precio;
+        const imgEl    = card.querySelector('.menu-card-img img');
+        const emojiEl  = card.querySelector('.menu-card-emoji');
+        const imgSrc   = imgEl ? imgEl.getAttribute('src') : null;
+        const emoji    = emojiEl ? emojiEl.textContent : null;
+        abrirModal(producto, precio, imgSrc, emoji);
       });
     });
 
     document.getElementById('modal-cerrar').addEventListener('click', cerrar);
     overlay.addEventListener('click', e => { if (e.target === overlay) cerrar(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrar(); });
+
+    // Botón atrás del celular cierra el modal
+    window.addEventListener('popstate', (e) => {
+      if (overlay.classList.contains('abierto')) {
+        cerrarSilencioso();
+      }
+    });
+
     function cerrar() {
+      if (overlay.classList.contains('abierto')) {
+        history.back(); // dispara popstate que llama cerrarSilencioso
+      }
+    }
+    function cerrarSilencioso() {
       overlay.classList.remove('abierto');
       document.body.style.overflow = '';
     }
