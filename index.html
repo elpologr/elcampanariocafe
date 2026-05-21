@@ -473,6 +473,36 @@
     }
     .modal-wa:hover { opacity: .85; }
 
+    /* ── HERO INFO BAR ── */
+    .hero-info {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 10px;
+      font-size: 13px; color: rgba(227,213,192,0.7);
+      margin-bottom: 32px; letter-spacing: .3px;
+      opacity: 0; animation: fadeUp .8s .7s forwards;
+    }
+    .hero-info-sep { color: rgba(200,150,60,0.4); }
+    .hero-info a:hover { color: var(--oro) !important; transition: color .2s; }
+
+    /* ── BOTONES SECCIÓN NOSOTROS ── */
+    .sobre-botones {
+      display: flex; gap: 16px; flex-wrap: wrap; margin-top: 32px;
+    }
+    .btn-sobre {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 28px; border-radius: 4px;
+      font-size: 14px; font-weight: 600; letter-spacing: .5px;
+      text-decoration: none; transition: all .25s;
+      border: 2px solid var(--cafe);
+      background: var(--cafe); color: var(--crema);
+    }
+    .btn-sobre:hover { background: var(--terrac); border-color: var(--terrac); color: #fff; }
+    .btn-sobre-alt {
+      background: transparent; color: var(--cafe);
+      border: 2px solid var(--cafe);
+    }
+    .btn-sobre-alt:hover { background: var(--cafe); color: var(--crema); }
+
     /* ── ANIMACIONES ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
@@ -517,7 +547,7 @@
       <li><a href="#cena-especial">Cenas Especiales</a></li>
       <li><a href="#vacantes">Únete</a></li>
     </ul>
-    <a href="https://wa.me/524439025810" target="_blank" class="nav-wa">
+    <a href="https://wa.me/524432756915" target="_blank" class="nav-wa">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       Reservar
     </a>
@@ -534,6 +564,13 @@
       <p class="hero-eyebrow">Morelia, Michoacán · Centro Histórico</p>
       <h1 class="hero-title">El<br><em>Campanario</em></h1>
       <p class="hero-subtitle">Tradición · Sabor · Historia</p>
+      <div class="hero-info">
+        <span>📍 Ignacio Zaragoza #37, frente a la Catedral</span>
+        <span class="hero-info-sep">·</span>
+        <span>📞 <a href="tel:4432756915" style="color:var(--piedra);text-decoration:none;">443 275 6915</a></span>
+        <span class="hero-info-sep">·</span>
+        <span>📘 <a href="https://www.facebook.com/ElCampanarioMorelia/?locale=es_LA" target="_blank" style="color:var(--piedra);text-decoration:none;">@ElCampanarioMorelia</a></span>
+      </div>
       <div class="hero-ctas">
         <a href="#menu" class="btn-primary">Ver Menú</a>
         <a href="#cena-especial" class="btn-outline">Cenas Especiales</a>
@@ -556,15 +593,13 @@
         <h2>Frente a la <em>Catedral</em>,<br>en el corazón de Morelia</h2>
         <p>En El Campanario encontrarás la mejor cocina michoacana y platillos internacionales, servidos en un ambiente que respira la historia de nuestra ciudad colonial.</p>
         <p>Somos una cadena de restaurantes comprometida con la calidad, el sabor auténtico y la calidez morelense. Cada visita es una experiencia que mezcla tradición e innovación en cada bocado.</p>
-        <div class="ubicacion-card">
-          <p><strong>📍 Centro Histórico</strong><br>
-          Ignacio Zaragoza #37, frente a la Catedral de Morelia</p>
-          <br>
-          <p><strong>📞 Reservaciones</strong><br>
-          <a href="tel:4439025810">443 902 5810</a></p>
-          <br>
-          <p><strong>📘 Síguenos</strong><br>
-          <a href="https://www.facebook.com/ElCampanarioMorelia/?locale=es_LA" target="_blank">@ElCampanarioMorelia</a></p>
+        <div class="sobre-botones">
+          <a href="https://maps.google.com/?q=Ignacio+Zaragoza+37+Centro+Histórico+Morelia+Michoacán" target="_blank" class="btn-sobre">
+            📍 Nuestra Ubicación
+          </a>
+          <a href="https://wa.me/524432756915?text=Hola,%20me%20gustaría%20hacer%20una%20reservación." target="_blank" class="btn-sobre btn-sobre-alt">
+            📞 Reservaciones
+          </a>
         </div>
       </div>
     </div>
@@ -800,7 +835,7 @@
       <div class="cena-cta">
         <div class="cena-precio">$2,349</div>
         <p class="cena-precio-sub">Por pareja · Incluye los 3 tiempos y maridaje</p>
-        <a href="https://wa.me/524439025810?text=¡Hola! Quiero reservar para la Cena Romance Italiano del 14 de febrero a las 8:00 PM. Somos 2 personas." target="_blank" class="btn-reservar">Reservar mi lugar</a>
+        <a href="https://wa.me/524432756915?text=¡Hola! Quiero reservar para la Cena Romance Italiano del 14 de febrero a las 8:00 PM. Somos 2 personas." target="_blank" class="btn-reservar">Reservar mi lugar</a>
       </div>
     </div>
   </section>
@@ -870,7 +905,7 @@
       <div class="footer-col">
         <h4>Contacto</h4>
         <ul>
-          <li><a href="tel:4439025810">443 902 5810</a></li>
+          <li><a href="tel:4432756915">443 275 6915</a></li>
           <li><a href="mailto:elcampanariogerencia@gmail.com">elcampanariogerencia@gmail.com</a></li>
           <li><a href="#nosotros">Ignacio Zaragoza #37</a></li>
           <li><a href="#nosotros">Centro Histórico, Morelia</a></li>
@@ -1098,7 +1133,7 @@
   </div>
 
   <script>
-    const WA = '524439025810';
+    const WA = '524432756915';
 
     // BURGER
     document.getElementById('burger').addEventListener('click', () => {
@@ -1156,7 +1191,7 @@ INFORMACIÓN DEL RESTAURANTE:
 - Nombre: El Campanario Morelia
 - Ubicación: Ignacio Zaragoza #37, Centro Histórico de Morelia, frente a la Catedral
 - También en: Av. Morelos Sur #71, Col. Centro (oficinas/RRHH)
-- Teléfono reservaciones: 443 902 5810
+- Teléfono reservaciones: 443 275 6915
 - Facebook: @ElCampanarioMorelia
 - Correo: elcampanariogerencia@gmail.com
 
@@ -1179,7 +1214,7 @@ Cena Especial (Romance Italiano, 14 de febrero):
 
 VACANTES: Presentar CV en Av. Morelos Sur #71 o enviar a elcampanariogerencia@gmail.com. Hay puestos operativos y administrativos.
 
-Si preguntan por reservaciones, diles que llamen al 443 902 5810 o escriban por WhatsApp.
+Si preguntan por reservaciones, diles que llamen al 443 275 6915 o escriban por WhatsApp.
 Si preguntan algo que no sabes, di que pueden contactar directamente al restaurante.
 Responde siempre en máximo 3-4 oraciones cortas.`;
 
@@ -1265,13 +1300,13 @@ Responde siempre en máximo 3-4 oraciones cortas.`;
           })
         });
         const data = await res.json();
-        const respuesta = data.content?.[0]?.text || 'Lo siento, hubo un problema. Por favor contáctanos al 443 902 5810.';
+        const respuesta = data.content?.[0]?.text || 'Lo siento, hubo un problema. Por favor contáctanos al 443 275 6915.';
         quitarTyping();
         historial.push({ role: 'assistant', content: respuesta });
         agregarMensaje(respuesta.replace(/\n/g, '<br>'), false);
       } catch (err) {
         quitarTyping();
-        agregarMensaje('Hubo un error de conexión. Llámanos al <strong>443 902 5810</strong> o escríbenos por WhatsApp.', false);
+        agregarMensaje('Hubo un error de conexión. Llámanos al <strong>443 275 6915</strong> o escríbenos por WhatsApp.', false);
       } finally {
         chatSend.disabled = false;
         chatInput.disabled = false;
